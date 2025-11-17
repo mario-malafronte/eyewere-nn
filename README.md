@@ -62,10 +62,9 @@ python -m src.train_tf --data data\eyewear.csv --outdir outputs
 1) **Pulizia** (`clean_dataset` in `utils.py`): ripulisce prezzi/valori mancanti, filtra range 3–500, rimuove duplicati.  
 2) **Feature** (`build_features`): trasforma testo in numeri:
    - **Numeriche**:  
-     `rating` (stelle), `reviews` (n. recensioni), `lens_mm` (se trova “XX mm” nel testo), e tante **parole chiave** binarie (0/1) come `polarized`, `photochromic`, `aviator`, `sports`, `uv400`, `acetate`, ecc. (lista `KEYWORDS` in `utils.py`).
-   - **Brand**: one‑hot dei **top 50** brand (ognuno diventa una colonna `brand_<nome>`), gli altri confluiscono in `brand_Other`.
+     `rating` (stelle), `reviews` (n. recensioni), e tante **parole chiave** binarie (0/1) come `polarized`, `photochromic`, `aviator`, `sports`, `uv400`, `acetate`, ecc. (lista `KEYWORDS` in `utils.py`).
 3) **Split**: separa **train/val/test** in modo riproducibile (seed).  
-4) **Standardizzazione**: scala **solo** le colonne numeriche con **media/deviazione del train** (niente leakage).  
+4) **Standardizzazione**: scala **solo** le colonne numeriche con **media/deviazione del train**.  
 5) **Rete neurale (Keras)**: 256→128→64 neuroni (ReLU) + Dropout, ottimizzatore **Adam**, perdita **MSE**, metrica **MAE**, **early stopping** su validation.  
 6) **Valutazione**: calcola **MAE**, **RMSE**, **R2** su validation e test.  
 7) **Salvataggi**: modello `.keras`, meta `.json`, predizioni e grafico.
@@ -121,5 +120,4 @@ python -m src.train_tf --data data\eyewear.csv --outdir outputs
 - **Filtro prezzi 3–500**: modificalo se hai premium fuori range.  
 
 
----
 
